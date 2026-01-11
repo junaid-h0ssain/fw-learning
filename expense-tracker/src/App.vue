@@ -50,9 +50,88 @@ watch(expenses, (val) => {
 </script>
 
 <template>
-    
+    <main class="container">
+        <header>
+            <h1>Expense Tracker</h1>
+        </header>
+
+        <section>
+            <form @submit.prevent="addExpense">
+                <div class="grid">
+                    <label>
+                        Amount
+                        <input type="number" v-model.number="newExpense.amount" required>
+                    </label>
+                    <label>
+                        Category
+                        <select v-model="newExpense.category">
+                            <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="grid">
+                    <label>
+                        Date
+                        <input type="date" v-model="newExpense.date" required>
+                    </label>
+                    <label>
+                        Description
+                        <input type="text" v-model="newExpense.description" placeholder="Optional note">
+                    </label>
+                </div>
+
+                <button type="submit">Add Expense</button>
+            </form>
+        </section>
+
+        <hr />
+
+        <section>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>Expenses</h2>
+                <h3>Total: ${{ totalSpent.toFixed(2) }}</h3>
+            </div>
+
+            <table v-if="expenses.length > 0">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="expense in expenses" :key="expense.id">
+                        <td>{{ expense.date }}</td>
+                        <td>{{ expense.category }}</td>
+                        <td>{{ expense.description }}</td>
+                        <td>${{ expense.amount.toFixed(2) }}</td>
+                        <td>
+                            <button class="outline secondary" @click="deleteExpense(expense.id)"
+                                style="padding: 4px 8px; font-size: 0.8rem;">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p v-else>No expenses logged yet.</p>
+        </section>
+    </main>
 </template>
 
 <style scoped>
+    main {
+        padding-top: 2rem;
+    }
 
+    header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    button {
+        margin-top: 0.5rem;
+    }
 </style>

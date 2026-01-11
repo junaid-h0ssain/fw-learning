@@ -1,0 +1,21 @@
+/* Debug borders to visualize structure */
+div {
+  border: 2px solid red !important;
+}
+
+/* Different colored borders for nested divs */
+div div {
+  border-color: blue !important;
+}
+
+div div div {
+  border-color: green !important;
+}
+
+div div div div {
+  border-color: orange !important;
+}
+
+div div div div div {
+  border-color: purple !important;
+}

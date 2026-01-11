@@ -26,6 +26,7 @@
         width: 100%;
         display: flex;
         justify-content: center;
+        border: white 6px;
     }
     .quote-box {
         width: 90%;

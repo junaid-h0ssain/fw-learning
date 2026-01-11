@@ -2,14 +2,31 @@
 import { ref, onMounted } from 'vue';
 
 const quote = ref<string>('');
-onMounted(async () => {
+
+const fallbackQuotes: string[] = [
+    "Be yourself; everyone else is already taken.",
+    "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
+    "So many books, so little time.",
+    "A room without books is like a body without a soul.",
+    "You only live once, but if you do it right, once is enough.",
+];
+
+async function fetchQuote() {
     try {
         const response = await fetch('/api/quote');
         const data = await response.json();
-        quote.value = data.content;
+        quote.value = data.content || getFallback();
     } catch (error) {
-        quote.value = 'Failed to load quote.';
+        quote.value = getFallback();
     }
+}
+
+function getFallback(): string {
+    return fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)] ?? 'No quote available.';
+}
+
+onMounted(() => {
+    fetchQuote();
 });
 
 
@@ -17,6 +34,9 @@ onMounted(async () => {
 
 <template>
     <blockquote v-if="quote">{{ quote }}</blockquote>
+    <div>
+        <button @click="fetchQuote">Retry</button>
+    </div>
 </template>
 
 <style scoped>

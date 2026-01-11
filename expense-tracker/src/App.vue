@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 
 const expenses = ref([])
+const isDark = ref(false)
 const newExpense = ref({
     amount: 0,
     category: 'Food',
@@ -38,11 +39,29 @@ const totalSpent = computed(() => {
 })
 
 onMounted(() => {
-    const saved = localStorage.getItem('expenses')
-    if (saved) {
-        expenses.value = JSON.parse(saved)
+    const savedExpenses = localStorage.getItem('expenses')
+    if (savedExpenses) {
+        expenses.value = JSON.parse(savedExpenses)
     }
+
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+        isDark.value = savedTheme === 'dark'
+    } else {
+        isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
+    updateTheme()
 })
+
+const updateTheme = () => {
+    document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
+}
+
+const toggleTheme = () => {
+    isDark.value = !isDark.value
+    updateTheme()
+    localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+}
 
 watch(expenses, (val) => {
     localStorage.setItem('expenses', JSON.stringify(val))
@@ -52,7 +71,13 @@ watch(expenses, (val) => {
 <template>
     <main class="container">
         <header>
-            <h1>Expense Tracker</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>Expense Tracker</h1>
+                <button class="outline secondary" @click="toggleTheme"
+                    style="width: auto; padding: 4px 12px; margin: 0;">
+                    {{ isDark ? 'Light Mode' : 'Dark Mode' }}
+                </button>
+            </div>
         </header>
 
         <section>
@@ -122,16 +147,16 @@ watch(expenses, (val) => {
 </template>
 
 <style scoped>
-    main {
-        padding-top: 2rem;
-    }
+main {
+    padding-top: 2rem;
+}
 
-    header {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
 
-    button {
-        margin-top: 0.5rem;
-    }
+button {
+    margin-top: 0.5rem;
+}
 </style>

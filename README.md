@@ -10,6 +10,7 @@ A collection of frontend framework learning projects exploring Vue.js, Nuxt, and
   - [Journal App (Nuxt 4)](#journal-app-nuxt-4)
   - [Journal Svelte (SvelteKit)](#journal-svelte-sveltekit)
   - [Journal2 (Vue.js + TypeScript)](#journal2-vuejs--typescript)
+  - [React App (React)](#react-app-react)
   - [VJS (Vue.js)](#vjs-vuejs)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
@@ -134,6 +135,28 @@ npm run dev
 
 ---
 
+### React App (React)
+
+A simple calculator application built with React 19 and TypeScript.
+
+**Features:**
+- Basic arithmetic operations
+- Clean, modern UI with Tailwind CSS
+- TypeScript for type safety
+- React Compiler support
+
+**Directory:** `react-app/`
+
+**Tech:** React 19, TypeScript 5.9, Vite 7, Tailwind CSS 4
+
+```bash
+cd react-app
+npm install
+npm run dev
+```
+
+---
+
 ### VJS (Vue.js)
 
 A simple Vue.js starter project demonstrating component composition.
@@ -161,12 +184,13 @@ npm run dev
 | Framework/Library | Version | Used In |
 |-------------------|---------|---------|
 | Vue.js | 3.5.x | expense-tracker, journal-app, journal2, vjs |
+| React | 19.x | react-app |
 | Nuxt | 4.2.x | journal-app |
 | SvelteKit | 2.x | journal-svelte |
 | Svelte | 5.x | journal-svelte |
 | Vite | 7.x | All projects |
-| TypeScript | 5.9.x | journal-app, journal-svelte, journal2 |
-| Tailwind CSS | 4.x | journal-svelte |
+| TypeScript | 5.9.x | journal-app, journal-svelte, journal2, react-app |
+| Tailwind CSS | 4.x | journal-svelte, react-app |
 | MongoDB/Mongoose | 7.6.x | journal-app |
 | Pico CSS | 2.x | journal-app |
 
@@ -227,6 +251,7 @@ Additional scripts vary by project (linting, type-checking, etc.).
 | journal-app | In Progress | Full-stack with MongoDB integration |
 | journal-svelte | In Progress | Mood-based journaling with Tailwind UI |
 | journal2 | In Progress | TypeScript Vue setup |
+| react-app | Complete | Basic calculator application |
 | vjs | Complete | Basic Vue component demo |
 
 ---

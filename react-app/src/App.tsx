@@ -1,40 +1,73 @@
-import { useState } from 'react'
+import { useState } from "react"
+import "./App.css"
 
-import './App.css'
+type ButtonProps = {
+  label: string
+  onClick: () => void
+  className?: string
+}
 
-function NumberButton({bValue}:{bValue:number}) {
+function CalcButton({ label, onClick, className = "" }: ButtonProps) {
   return (
-    <button className='px-6 py-2 bg-gray-400 hover:bg-gray-500 text-white'> {bValue} </button>
+    <button
+      onClick={onClick}
+      className={`px-6 py-3 bg-gray-400 hover:bg-gray-500 text-white font-semibold rounded ${className}`}
+    >
+      {label}
+    </button>
   )
 }
 
-function App() {
+export default function App() {
+  const [display, setDisplay] = useState("")
 
-  const [value, setValue] = useState(0)
+  const appendValue = (val: string) => {
+    setDisplay(prev => prev + val)
+  }
 
+  const calculate = () => {
+    try {
+      setDisplay(eval(display).toString())
+    } catch {
+      setDisplay("Error")
+    }
+  }
+
+  const clear = () => setDisplay("")
 
   return (
-    <>
-      <div className="app-container">
-        <div className='align-center justify-center flex flex-col gap-4'>{value}</div>
-        <NumberButton bValue={1} />
-        <NumberButton bValue={2} />
-        <NumberButton bValue={3} /><br />
-        <NumberButton bValue={4} />
-        <NumberButton bValue={5} />
-        <NumberButton bValue={6} /><br />
-        <NumberButton bValue={7} />
-        <NumberButton bValue={8} />
-        <NumberButton bValue={9} />
+    <div className="min-h-screen flex items-center justify-center bg-green-300">
+      <div className="bg-yellow-200 p-6 rounded-xl shadow-lg w-72">
+        
+        {/* Display */}
+        <div className="bg-black text-white text-right p-3 mb-4 rounded text-xl">
+          {display || "0"}
+        </div>
 
-        <br />
-        <button className='px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-colors' 
-        onClick={() => setValue(value + 1)}>Add</button>
-        <button className='px-6 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg transition-colors' 
-        onClick={() => setValue(value - 1)}>Subtract</button>
+        {/* Buttons */}
+        <div className="grid grid-cols-4 gap-2">
+          <CalcButton label="7" onClick={() => appendValue("7")} />
+          <CalcButton label="8" onClick={() => appendValue("8")} />
+          <CalcButton label="9" onClick={() => appendValue("9")} />
+          <CalcButton label="÷" onClick={() => appendValue("/")} className="bg-orange-500 hover:bg-orange-600" />
+
+          <CalcButton label="4" onClick={() => appendValue("4")} />
+          <CalcButton label="5" onClick={() => appendValue("5")} />
+          <CalcButton label="6" onClick={() => appendValue("6")} />
+          <CalcButton label="×" onClick={() => appendValue("*")} className="bg-orange-500 hover:bg-orange-600" />
+
+          <CalcButton label="1" onClick={() => appendValue("1")} />
+          <CalcButton label="2" onClick={() => appendValue("2")} />
+          <CalcButton label="3" onClick={() => appendValue("3")} />
+          <CalcButton label="+" onClick={() => appendValue("+")} className="bg-orange-500 hover:bg-orange-600" />
+
+          <CalcButton label="C" onClick={clear} className="bg-red-500 hover:bg-red-600" />
+          <CalcButton label="0" onClick={() => appendValue("0")} />
+          
+          <CalcButton label="=" onClick={calculate} className="bg-green-500 hover:bg-green-600" />
+          <CalcButton label="−" onClick={() => appendValue("-")} className="bg-orange-500 hover:bg-orange-600" />
+        </div>
       </div>
-    </>
+    </div>
   )
 }
-
-export default App
